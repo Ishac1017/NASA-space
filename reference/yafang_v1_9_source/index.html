@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MOONBOUND — Space Mission Game V1.9</title>
+  <meta name="description" content="Build a science spacecraft, test your engineering choices, launch, navigate space hazards, and complete a mission.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="star-bg" aria-hidden="true"></canvas>
+  <div class="app-shell">
+    <header class="masthead">
+      <div class="brand"><span class="brand-symbol">◖</span><div><div class="brand-name">MOONBOUND<span class="brand-dot">✦</span></div><div class="brand-caption">SPACE MISSION DESIGN GAME <span class="split">/</span> WEB PLAYABLE EDITION</div></div></div>
+      <div class="mast-actions">
+        <div class="small-note" id="data-chip"><span class="dot"></span> JPL orbital reference</div>
+        <button id="solar-toggle" class="btn btn-ghost btn-sm" aria-expanded="false">☀ SOLAR SYSTEM</button>
+        <button id="music-toggle" class="btn btn-ghost btn-sm" aria-pressed="false">♫ MUSIC OFF</button>
+        <label class="volume-wrap" for="volume-slider">VOL <input type="range" id="volume-slider" min="0" max="100" value="24" aria-label="Music volume"></label>
+        <button id="profile-btn" class="btn btn-ghost btn-sm" title="Local profile on this device">👤 GUEST</button>
+        <button id="save-game" class="btn btn-ghost btn-sm">SAVE</button>
+        <button id="new-game" class="btn btn-ghost btn-sm" title="Start over">RESET</button>
+      </div>
+    </header>
+    <nav id="progress" class="steps" aria-label="Game stages"></nav>
+    <div id="message" class="status-line" role="status" aria-live="polite"></div>
+    <main id="view" class="main-content" tabindex="-1"></main>
+    <footer class="footbar">
+      <span><span class="mark">●</span> OFFICIAL PLANETARY REFERENCE: NASA/JPL PUBLISHED APPROXIMATE ORBITAL ELEMENTS (1800–2050)</span>
+      <span>ROCKET, COSTS, EVENTS AND LANDING: EDUCATIONAL SIMULATIONS · <button id="sources-btn" class="text-link">SOURCES & DISCLOSURES</button></span>
+    </footer>
+  </div>
+  <div id="modal-root" class="modal-root" hidden></div>
+  <div id="solar-modal" class="solar-modal" hidden>
+    <section class="solar-dialog" role="dialog" aria-modal="true" aria-labelledby="solar-title">
+      <div class="solar-head">
+        <div><div class="eyebrow">NASA/JPL PLANETARY REFERENCE</div><h2 id="solar-title">☀ Solar System · Mission Tracker</h2></div>
+        <button id="solar-close" class="btn btn-primary btn-sm">✕ CLOSE</button>
+      </div>
+      <div class="solar-toolbar">
+        <button id="solar-back" class="btn btn-ghost btn-sm">−30 DAYS</button>
+        <button id="solar-play" class="btn btn-ghost btn-sm" aria-pressed="true">❚❚ PAUSE</button>
+        <button id="solar-forward" class="btn btn-ghost btn-sm">+30 DAYS</button>
+        <span id="solar-date" class="solar-date">DATE</span>
+        <div id="solar-unified-controls" class="solar-unified-controls" aria-label="Planetary simulation controls"></div>
+      </div>
+      <div class="solar-layout">
+        <div class="solar-map"><canvas id="solar-canvas" aria-label="Animated approximate JPL heliocentric orbits of all eight major planets"></canvas></div>
+        <aside class="solar-sidebar"><h3>MY MISSION</h3><div id="solar-mission-info"></div><div class="solar-legend"><span style="color:#ffc565">● Sun</span><span style="color:#c3cad4">● Mercury</span><span style="color:#f5d492">● Venus</span><span style="color:#73cfff">● Earth</span><span style="color:#f18d70">● Mars</span><span style="color:#edbd85">● Jupiter</span><span style="color:#ecd4aa">● Saturn</span><span style="color:#86eddf">● Uranus</span><span style="color:#759aff">● Neptune</span></div>
+          <p class="muted tiny">Planet positions: NASA/JPL published 1800–2050 approximate elements. Local spacecraft orbit and transfer overlays: educational simulations, not live NASA tracking. In-flight transfer and planet positions share one simulation clock. Display distances are intentionally compressed; game transfer and local lunar views are educational approximations.</p></aside>
+      </div>
+    </section>
+  </div>
+  <audio id="music-player" preload="none" loop></audio>
+  <audio id="music-player-secondary" preload="none" loop></audio>
+  <script src="game.js" defer></script>
+</body>
+</html>

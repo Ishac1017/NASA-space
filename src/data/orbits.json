@@ -1,0 +1,126 @@
+[
+  {
+    "id": "leo",
+    "name": "Low Earth sun-synchronous orbit",
+    "a": 170,
+    "b": 112,
+    "speed": 1.15,
+    "note": "An Earth-observing orbit: short ground contacts, repeated views of Earth, and periods of eclipse. A real Sun-synchronous orbit also needs a particular inclination.",
+    "zones": [
+      {
+        "id": "radiation",
+        "type": "radiation",
+        "label": "Radiation region (illustrative)",
+        "from": 150,
+        "to": 200
+      },
+      {
+        "id": "station",
+        "type": "groundStation",
+        "label": "Ground station",
+        "from": 240,
+        "to": 300
+      },
+      {
+        "id": "eclipse",
+        "type": "eclipse",
+        "label": "Eclipse",
+        "from": -28,
+        "to": 28
+      }
+    ]
+  },
+  {
+    "id": "high",
+    "name": "High elliptical orbit",
+    "a": 255,
+    "b": 160,
+    "speed": 0.5,
+    "note": "Long dwell over a region, with higher radiation exposure.",
+    "zones": [
+      {
+        "id": "radiation",
+        "type": "radiation",
+        "label": "Radiation belt",
+        "from": 120,
+        "to": 240
+      },
+      {
+        "id": "station",
+        "type": "groundStation",
+        "label": "Ground station",
+        "from": 250,
+        "to": 290
+      },
+      {
+        "id": "eclipse",
+        "type": "eclipse",
+        "label": "Eclipse",
+        "from": -15,
+        "to": 15
+      }
+    ]
+  },
+  {
+    "id": "lunar",
+    "name": "Low lunar polar orbit",
+    "a": 170,
+    "b": 132,
+    "speed": 0.8,
+    "note": "Repeated views of the south pole, periodic Earth-blocked radio passes, and occasional eclipse. Permanently dark craters are on the SURFACE; the whole spacecraft is not always in darkness.",
+    "zones": [
+      {
+        "id": "radiation",
+        "type": "radiation",
+        "label": "Radiation exposure",
+        "from": 130,
+        "to": 165
+      },
+      {
+        "id": "station",
+        "type": "groundStation",
+        "label": "Earth link",
+        "from": 250,
+        "to": 290
+      },
+      {
+        "id": "eclipse",
+        "type": "eclipse",
+        "label": "Far side / shadow",
+        "from": -35,
+        "to": 55
+      }
+    ]
+  },
+  {
+    "id": "deep",
+    "name": "Deep-space cruise / Neptune orbit",
+    "a": 218,
+    "b": 150,
+    "speed": 0.62,
+    "note": "Long cruise followed by a simplified Neptune orbit. A Neptune ORBITER is far harder than Voyager 2\u2019s historical flyby.",
+    "zones": [
+      {
+        "id": "radiation",
+        "type": "radiation",
+        "label": "Cruise hazard",
+        "from": 110,
+        "to": 150
+      },
+      {
+        "id": "station",
+        "type": "groundStation",
+        "label": "Deep-space link",
+        "from": 225,
+        "to": 265
+      },
+      {
+        "id": "eclipse",
+        "type": "eclipse",
+        "label": "Cold shadow",
+        "from": -20,
+        "to": 20
+      }
+    ]
+  }
+]

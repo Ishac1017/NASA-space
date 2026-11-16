@@ -1,0 +1,140 @@
+[
+  {
+    "id": "wildfire",
+    "name": "Earth Wildfire Watcher",
+    "difficulty": "Beginner",
+    "orbit": "leo",
+    "budgetCap": 420,
+    "lifetimeLaps": 4,
+    "brief": "Spot possible wildfires with a heat-sensing camera and send useful reports to people on Earth. Keep the satellite working through a simulated 3-year mission.",
+    "baseRequirements": [
+      {
+        "id": "thermal",
+        "text": "Install a heat-sensing infrared camera to spot hot areas",
+        "metric": "hasThermal",
+        "op": "==",
+        "value": 1
+      },
+      {
+        "id": "lifetime",
+        "text": "Keep the spacecraft running for the full 3-year simulation",
+        "metric": "lifetime",
+        "op": ">=",
+        "value": 4
+      }
+    ],
+    "optionalRequirements": [
+      {
+        "id": "radar",
+        "text": "See through smoke with SAR radar",
+        "metric": "hasRadar",
+        "op": "==",
+        "value": 1
+      },
+      {
+        "id": "data",
+        "text": "Maintain a nonnegative data downlink balance",
+        "metric": "dataBalance",
+        "op": ">=",
+        "value": 0
+      }
+    ],
+    "eventPool": [
+      "calibration",
+      "cloud_smoke",
+      "data_overload",
+      "fire_emergency"
+    ]
+  },
+  {
+    "id": "lunar",
+    "name": "Lunar South Pole Ice Scout",
+    "difficulty": "Intermediate",
+    "orbit": "lunar",
+    "budgetCap": 750,
+    "lifetimeLaps": 6,
+    "brief": "Circle the Moon and map the south pole. Search for signs of ice in craters that never receive direct sunlight. A hydrogen reading is a clue\u2014not proof of water ice.",
+    "baseRequirements": [
+      {
+        "id": "ice",
+        "text": "Install a neutron detector or ice-search radar to look for possible ice",
+        "metric": "hasIce",
+        "op": "==",
+        "value": 1
+      },
+      {
+        "id": "map",
+        "text": "Install a camera, radar, or laser altimeter to map the surface",
+        "metric": "hasMapping",
+        "op": "==",
+        "value": 1
+      }
+    ],
+    "optionalRequirements": [
+      {
+        "id": "relay",
+        "text": "Support partner-agency relay requests",
+        "metric": "hasRelay",
+        "op": "==",
+        "value": 1
+      }
+    ],
+    "eventPool": [
+      "van_allen",
+      "far_blackout",
+      "lunar_thermal",
+      "ice_signal",
+      "solar_storm",
+      "partner_relay"
+    ]
+  },
+  {
+    "id": "neptune",
+    "name": "Neptune Atmosphere Mission",
+    "difficulty": "Advanced",
+    "orbit": "deep",
+    "budgetCap": 1600,
+    "lifetimeLaps": 6,
+    "brief": "Send an imaginary Neptune orbiter with a one-use atmospheric probe. Cross deep space, photograph changing storms, and send probe measurements home. Neptune has no solid surface to land on.",
+    "baseRequirements": [
+      {
+        "id": "camera",
+        "text": "Install a visible-light camera for Neptune cloud pictures",
+        "metric": "hasCamera",
+        "op": "==",
+        "value": 1
+      },
+      {
+        "id": "probe",
+        "text": "Carry a one-use atmospheric probe",
+        "metric": "hasProbe",
+        "op": "==",
+        "value": 1
+      },
+      {
+        "id": "power",
+        "text": "Use a radioisotope generator (RTG) far from the Sun",
+        "metric": "hasRTG",
+        "op": "==",
+        "value": 1
+      }
+    ],
+    "optionalRequirements": [
+      {
+        "id": "autonomy",
+        "text": "Carry an autonomous flight computer for delayed communications",
+        "metric": "hasAutonomy",
+        "op": "==",
+        "value": 1
+      }
+    ],
+    "eventPool": [
+      "asteroid_belt",
+      "rtg_decay",
+      "comm_delay",
+      "neptune_cold",
+      "probe_window",
+      "dark_storm"
+    ]
+  }
+]

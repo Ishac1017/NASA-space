@@ -1,0 +1,377 @@
+{
+  "templates": [
+    {
+      "id": "smallsat",
+      "name": "Smallsat",
+      "baseMass": 150,
+      "baseCost": 40,
+      "slots": 2,
+      "powerCeiling": 300,
+      "note": "Best for a simple Earth-orbit mission."
+    },
+    {
+      "id": "orbiter",
+      "name": "Orbiter",
+      "baseMass": 800,
+      "baseCost": 250,
+      "slots": 4,
+      "powerCeiling": 1200,
+      "note": "Good for a Moon mapping mission."
+    },
+    {
+      "id": "flagship",
+      "name": "Flagship",
+      "baseMass": 2500,
+      "baseCost": 900,
+      "slots": 6,
+      "powerCeiling": 3000,
+      "note": "Room for a long, difficult outer-planet mission."
+    }
+  ],
+  "instruments": [
+    {
+      "id": "thermal_ir",
+      "name": "Thermal infrared imager",
+      "mass": 12,
+      "draw": 30,
+      "cost": 25,
+      "data": 3,
+      "science": 10,
+      "tip": "Finds unusually hot spots in infrared images; a hot spot must still be checked before being called a wildfire."
+    },
+    {
+      "id": "visible_cam",
+      "name": "Visible camera",
+      "mass": 8,
+      "draw": 15,
+      "cost": 10,
+      "data": 2,
+      "science": 6,
+      "tip": "Takes pictures of clouds, storms, or surfaces. Thick clouds block views of the ground."
+    },
+    {
+      "id": "radar",
+      "name": "Radar (SAR)",
+      "mass": 60,
+      "draw": 200,
+      "cost": 80,
+      "data": 6,
+      "science": 15,
+      "tip": "Sends radio pulses; maps surface through clouds and smoke, but does NOT directly measure fire heat."
+    },
+    {
+      "id": "spectrometer",
+      "name": "Spectrometer",
+      "mass": 20,
+      "draw": 40,
+      "cost": 30,
+      "data": 1,
+      "science": 8,
+      "tip": "Separates light into colors to help identify gases or materials."
+    },
+    {
+      "id": "magnetometer",
+      "name": "Magnetometer",
+      "mass": 6,
+      "draw": 5,
+      "cost": 8,
+      "data": 1,
+      "science": 6,
+      "tip": "Measures magnetic fields; useful at Neptune."
+    },
+    {
+      "id": "neutron",
+      "name": "Neutron / particle detector",
+      "mass": 12,
+      "draw": 10,
+      "cost": 28,
+      "data": 1,
+      "science": 12,
+      "tip": "Maps hydrogen near the Moon\u2019s surface. Hydrogen is a clue to possible ice, not proof."
+    },
+    {
+      "id": "probe",
+      "name": "Atmospheric descent probe",
+      "mass": 140,
+      "draw": 0,
+      "cost": 100,
+      "data": 3,
+      "science": 24,
+      "tip": "A one-use Neptune descent probe. It falls into the atmosphere; there is no solid surface landing."
+    },
+    {
+      "id": "altimeter",
+      "name": "Laser altimeter",
+      "mass": 25,
+      "draw": 60,
+      "cost": 35,
+      "data": 1,
+      "science": 9,
+      "tip": "Uses laser pulses to measure the height and shape of the Moon\u2019s terrain."
+    }
+  ],
+  "battery": [
+    {
+      "id": "battery_small",
+      "name": "Small battery (500 Wh)",
+      "mass": 10,
+      "cost": 5,
+      "wh": 500
+    },
+    {
+      "id": "battery_medium",
+      "name": "Medium battery (1,500 Wh)",
+      "mass": 30,
+      "cost": 12,
+      "wh": 1500
+    },
+    {
+      "id": "battery_large",
+      "name": "Large battery (3,000 Wh)",
+      "mass": 60,
+      "cost": 25,
+      "wh": 3000
+    }
+  ],
+  "power": [
+    {
+      "id": "solar_small",
+      "name": "Small solar arrays (300 W)",
+      "mass": 20,
+      "cost": 10,
+      "output": 300
+    },
+    {
+      "id": "solar_large",
+      "name": "Large solar arrays (1,000 W)",
+      "mass": 60,
+      "cost": 30,
+      "output": 1000
+    },
+    {
+      "id": "rtg",
+      "name": "Radioisotope generator (RTG \u00b7 250 W)",
+      "mass": 70,
+      "cost": 110,
+      "output": 250,
+      "note": "Makes electricity from the heat of radioactive decay. It is not a nuclear reactor."
+    }
+  ],
+  "comms": [
+    {
+      "id": "comms_small",
+      "name": "Small antenna",
+      "mass": 10,
+      "draw": 20,
+      "cost": 5,
+      "downlink": 1
+    },
+    {
+      "id": "comms_medium",
+      "name": "Medium dish",
+      "mass": 22,
+      "draw": 60,
+      "cost": 15,
+      "downlink": 4
+    },
+    {
+      "id": "comms_large",
+      "name": "Large dish",
+      "mass": 40,
+      "draw": 120,
+      "cost": 25,
+      "downlink": 12
+    }
+  ],
+  "shielding": [
+    {
+      "id": "shield_light",
+      "name": "Light frame",
+      "mass": 10,
+      "cost": 5,
+      "level": 1
+    },
+    {
+      "id": "shield_standard",
+      "name": "Standard frame",
+      "mass": 30,
+      "cost": 15,
+      "level": 3
+    },
+    {
+      "id": "shield_hard",
+      "name": "Hardened frame",
+      "mass": 60,
+      "cost": 30,
+      "level": 5
+    }
+  ],
+  "storage": [
+    {
+      "id": "storage_small",
+      "name": "Small data vault",
+      "mass": 5,
+      "cost": 3,
+      "capacity": 50
+    },
+    {
+      "id": "storage_medium",
+      "name": "Medium data vault",
+      "mass": 10,
+      "cost": 6,
+      "capacity": 120
+    },
+    {
+      "id": "storage_large",
+      "name": "Large data vault",
+      "mass": 15,
+      "cost": 10,
+      "capacity": 200
+    }
+  ],
+  "computer": [
+    {
+      "id": "computer_basic",
+      "name": "Basic flight computer",
+      "mass": 8,
+      "cost": 8,
+      "reliability": 2
+    },
+    {
+      "id": "computer_hardened",
+      "name": "Radiation-hardened computer",
+      "mass": 18,
+      "cost": 30,
+      "reliability": 4
+    },
+    {
+      "id": "computer_auto",
+      "name": "Autonomous flight computer",
+      "mass": 20,
+      "cost": 35,
+      "reliability": 3
+    }
+  ],
+  "thermal": [
+    {
+      "id": "thermal_passive",
+      "name": "Passive insulation",
+      "mass": 8,
+      "cost": 6,
+      "draw": 0
+    },
+    {
+      "id": "thermal_heaters",
+      "name": "Heaters and radiators",
+      "mass": 20,
+      "cost": 18,
+      "draw": 40
+    },
+    {
+      "id": "thermal_advanced",
+      "name": "Advanced thermal loop",
+      "mass": 45,
+      "cost": 45,
+      "draw": 20
+    }
+  ],
+  "propulsion": [
+    {
+      "id": "prop_chemical",
+      "name": "Chemical thrusters",
+      "mass": 24,
+      "cost": 25,
+      "draw": 5
+    },
+    {
+      "id": "prop_ion",
+      "name": "Ion propulsion",
+      "mass": 35,
+      "cost": 50,
+      "draw": 100
+    }
+  ],
+  "pointing": [
+    {
+      "id": "point_basic",
+      "name": "Basic reaction wheels",
+      "mass": 10,
+      "cost": 8
+    },
+    {
+      "id": "point_precision",
+      "name": "Precision pointing",
+      "mass": 22,
+      "cost": 28
+    }
+  ],
+  "fuel": [
+    {
+      "id": "fuel_small",
+      "name": "Small fuel tank",
+      "mass": 30,
+      "cost": 10,
+      "fuel": 35
+    },
+    {
+      "id": "fuel_medium",
+      "name": "Medium fuel tank",
+      "mass": 90,
+      "cost": 22,
+      "fuel": 65
+    },
+    {
+      "id": "fuel_large",
+      "name": "Large fuel tank",
+      "mass": 180,
+      "cost": 40,
+      "fuel": 100
+    }
+  ],
+  "batteryType": [
+    {
+      "id": "battery_standard",
+      "name": "Standard cells",
+      "mass": 0,
+      "cost": 0
+    },
+    {
+      "id": "battery_longlife",
+      "name": "Long-life cells",
+      "mass": 5,
+      "cost": 12
+    }
+  ],
+  "redundancy": [
+    {
+      "id": "backup_computer",
+      "name": "Backup computer",
+      "mass": 15,
+      "cost": 24
+    },
+    {
+      "id": "backup_instrument",
+      "name": "Backup instrument",
+      "mass": 20,
+      "cost": 22
+    },
+    {
+      "id": "spare_battery",
+      "name": "Spare battery cell",
+      "mass": 12,
+      "cost": 10
+    },
+    {
+      "id": "backup_transmitter",
+      "name": "Backup transmitter",
+      "mass": 15,
+      "cost": 20
+    },
+    {
+      "id": "relay",
+      "name": "Relay capability",
+      "mass": 12,
+      "cost": 16
+    }
+  ]
+}

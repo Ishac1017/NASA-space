@@ -1,0 +1,634 @@
+[
+  {
+    "id": "calibration",
+    "trigger": {
+      "type": "lap",
+      "lap": 1
+    },
+    "room": "instr",
+    "title": "Instrument calibration",
+    "text": "Your thermal imager needs calibration before observations begin.",
+    "why": "Calibration improves data quality.",
+    "options": [
+      {
+        "label": "Calibrate carefully",
+        "pass": {
+          "effects": {
+            "science": 12,
+            "charge": -8
+          },
+          "reason": "Calibration improved thermal data quality."
+        }
+      },
+      {
+        "label": "Start observations immediately",
+        "pass": {
+          "effects": {
+            "science": 3,
+            "health": -6
+          },
+          "reason": "Early measurements were noisy."
+        }
+      }
+    ]
+  },
+  {
+    "id": "cloud_smoke",
+    "trigger": {
+      "type": "lap",
+      "lap": 2
+    },
+    "room": "instr",
+    "title": "Cloud and smoke cover",
+    "text": "A wildfire region is hidden by thick clouds and drifting smoke. Visible cameras may miss the land below. Radar can map the land through clouds, but it cannot directly detect fire heat.",
+    "why": "Heat cameras find hot spots when the atmosphere allows a clear view; radar helps map terrain or burned areas through cloud cover.",
+    "options": [
+      {
+        "label": "Use radar to map the hidden land and burn area",
+        "pass": {
+          "effects": {
+            "science": 22,
+            "data": 18
+          },
+          "reason": "Radar provided a map through the clouds. It did not directly detect the fire\u2019s heat."
+        },
+        "needs": {
+          "stat": "hasRadar",
+          "min": 1
+        },
+        "fail": {
+          "effects": {
+            "science": -8
+          },
+          "reason": "No SAR radar was installed."
+        }
+      },
+      {
+        "label": "Wait for a clearer thermal-image pass",
+        "pass": {
+          "effects": {
+            "science": 5
+          },
+          "reason": "You waited and collected partial coverage."
+        }
+      }
+    ]
+  },
+  {
+    "id": "data_overload",
+    "trigger": {
+      "type": "lap",
+      "lap": 3
+    },
+    "room": "vault",
+    "title": "Data overload",
+    "text": "Fire imagery is filling onboard storage faster than the downlink.",
+    "why": "Prioritize emergency observations and protect storage.",
+    "options": [
+      {
+        "label": "Prioritize urgent fire data",
+        "pass": {
+          "effects": {
+            "data": -30,
+            "science": 16
+          },
+          "reason": "Urgent data reached ground teams."
+        }
+      },
+      {
+        "label": "Transmit all observations",
+        "pass": {
+          "effects": {
+            "data": 25,
+            "science": 6
+          },
+          "reason": "The downlink queue grew."
+        }
+      }
+    ]
+  },
+  {
+    "id": "fire_emergency",
+    "trigger": {
+      "type": "lap",
+      "lap": 4
+    },
+    "room": "comms",
+    "title": "Major fire emergency",
+    "text": "Ground responders ask for an updated heat map of a fast-changing fire region. The satellite has only a short ground-station pass.",
+    "why": "Timely, checked data can help responders, but an unverified hot spot should not be presented as confirmed fire.",
+    "options": [
+      {
+        "label": "Retask the satellite",
+        "pass": {
+          "effects": {
+            "charge": -18,
+            "science": 28
+          },
+          "reason": "Emergency imagery delivered."
+        }
+      },
+      {
+        "label": "Continue routine mapping",
+        "pass": {
+          "effects": {
+            "science": 8
+          },
+          "reason": "Routine coverage continued, but emergency support was missed."
+        }
+      }
+    ]
+  },
+  {
+    "id": "van_allen",
+    "trigger": {
+      "type": "lap",
+      "lap": 1
+    },
+    "room": "hull",
+    "title": "Van Allen belt transit",
+    "text": "Radiation threatens sensitive instruments during transfer.",
+    "why": "Shielding and safe mode protect electronics.",
+    "options": [
+      {
+        "label": "Power down sensitive instruments",
+        "pass": {
+          "effects": {
+            "health": 0,
+            "science": -3
+          },
+          "reason": "Electronics remained safe."
+        }
+      },
+      {
+        "label": "Continue collecting data",
+        "pass": {
+          "effects": {
+            "science": 12
+          },
+          "reason": "Hardened electronics survived."
+        },
+        "needs": {
+          "stat": "shielding",
+          "min": 3
+        },
+        "fail": {
+          "effects": {
+            "health": -28
+          },
+          "reason": "Radiation damaged vulnerable systems."
+        }
+      }
+    ]
+  },
+  {
+    "id": "far_blackout",
+    "trigger": {
+      "type": "lap",
+      "lap": 2
+    },
+    "room": "comms",
+    "title": "Far-side communications blackout",
+    "text": "Earth is hidden behind the Moon.",
+    "why": "Data must be buffered until contact resumes.",
+    "options": [
+      {
+        "label": "Store science data onboard",
+        "pass": {
+          "effects": {
+            "data": 24,
+            "science": 12
+          },
+          "reason": "Observations were saved for later downlink."
+        },
+        "needs": {
+          "stat": "storageCap",
+          "min": 120
+        },
+        "fail": {
+          "effects": {
+            "data": 65,
+            "science": -5
+          },
+          "reason": "Storage overflowed during the blackout."
+        }
+      },
+      {
+        "label": "Discard low-value observations",
+        "pass": {
+          "effects": {
+            "data": -18,
+            "science": -3
+          },
+          "reason": "High-priority data was preserved."
+        }
+      }
+    ]
+  },
+  {
+    "id": "lunar_thermal",
+    "trigger": {
+      "type": "lap",
+      "lap": 3
+    },
+    "room": "thermal",
+    "title": "Lunar temperature swing",
+    "text": "The spacecraft passes from sunlight into deep shadow.",
+    "why": "Thermal control protects the instruments.",
+    "options": [
+      {
+        "label": "Activate thermal control",
+        "pass": {
+          "effects": {
+            "charge": -18,
+            "science": 8
+          },
+          "reason": "Heaters stabilized the payload."
+        },
+        "needs": {
+          "stat": "thermalQuality",
+          "min": 1
+        },
+        "fail": {
+          "effects": {
+            "health": -22
+          },
+          "reason": "Passive insulation could not regulate the temperature."
+        }
+      },
+      {
+        "label": "Save power",
+        "pass": {
+          "effects": {
+            "charge": 10,
+            "health": -14
+          },
+          "reason": "The instruments experienced thermal stress."
+        }
+      }
+    ]
+  },
+  {
+    "id": "ice_signal",
+    "trigger": {
+      "type": "lap",
+      "lap": 4
+    },
+    "room": "instr",
+    "title": "Possible ice signature",
+    "text": "The neutron detector finds fewer escaping neutrons over one crater. This suggests extra hydrogen, but that is not proof of water ice.",
+    "why": "Repeat measurements and compare with other instruments before declaring ice.",
+    "options": [
+      {
+        "label": "Repeat hydrogen or radar observations",
+        "pass": {
+          "effects": {
+            "science": 26,
+            "data": 12
+          },
+          "reason": "Repeated readings strengthened the hydrogen clue, but did not prove ice."
+        },
+        "needs": {
+          "stat": "hasIce",
+          "min": 1
+        },
+        "fail": {
+          "effects": {
+            "science": -8
+          },
+          "reason": "Your payload could not confirm the signature."
+        }
+      },
+      {
+        "label": "Maintain global coverage",
+        "pass": {
+          "effects": {
+            "science": 12
+          },
+          "reason": "You preserved broad polar coverage."
+        }
+      }
+    ]
+  },
+  {
+    "id": "solar_storm",
+    "trigger": {
+      "type": "lap",
+      "lap": 5
+    },
+    "room": "hull",
+    "title": "Solar storm",
+    "text": "An energetic burst of particles from the Sun could damage electronics. The simulated crew on Earth must decide whether to protect the spacecraft or keep collecting observations.",
+    "why": "Safe mode trades science for survival.",
+    "options": [
+      {
+        "label": "Enter safe mode",
+        "pass": {
+          "effects": {
+            "science": -5,
+            "health": 4
+          },
+          "reason": "The spacecraft rode out the storm."
+        }
+      },
+      {
+        "label": "Continue science",
+        "pass": {
+          "effects": {
+            "science": 12
+          },
+          "reason": "Radiation shielding protected the payload."
+        },
+        "needs": {
+          "stat": "shielding",
+          "min": 3
+        },
+        "fail": {
+          "effects": {
+            "health": -34
+          },
+          "reason": "The storm damaged the spacecraft."
+        }
+      }
+    ]
+  },
+  {
+    "id": "partner_relay",
+    "trigger": {
+      "type": "lap",
+      "lap": 6
+    },
+    "room": "comms",
+    "title": "Partner agency relay request",
+    "text": "Another lunar mission asks you to relay data.",
+    "why": "Relay capability consumes communications time.",
+    "options": [
+      {
+        "label": "Accept the relay request",
+        "pass": {
+          "effects": {
+            "science": 14,
+            "data": 15
+          },
+          "reason": "The relay succeeded and strengthened collaboration."
+        },
+        "needs": {
+          "stat": "hasRelay",
+          "min": 1
+        },
+        "fail": {
+          "effects": {
+            "science": -3
+          },
+          "reason": "Your spacecraft lacks relay capability."
+        }
+      },
+      {
+        "label": "Decline to preserve downlink",
+        "pass": {
+          "effects": {
+            "data": -10
+          },
+          "reason": "Your downlink remained available for your own science."
+        }
+      }
+    ]
+  },
+  {
+    "id": "asteroid_belt",
+    "trigger": {
+      "type": "lap",
+      "lap": 1
+    },
+    "room": "engine",
+    "title": "Asteroid belt crossing",
+    "text": "You are crossing the main asteroid belt. Unlike in movies, objects are usually very far apart; spacecraft pass through without weaving around rocks.",
+    "why": "A large avoidance burn would waste precious propellant; the simulated risk is extremely small.",
+    "options": [
+      {
+        "label": "Make a small course correction",
+        "pass": {
+          "effects": {
+            "fuel": -8,
+            "science": 2
+          },
+          "reason": "The trajectory was adjusted safely."
+        }
+      },
+      {
+        "label": "Stay on course",
+        "pass": {
+          "effects": {
+            "science": 8
+          },
+          "reason": "You crossed the largely empty belt safely."
+        }
+      }
+    ]
+  },
+  {
+    "id": "rtg_decay",
+    "trigger": {
+      "type": "lap",
+      "lap": 2
+    },
+    "room": "power",
+    "title": "RTG output slowly declining",
+    "text": "Radioisotope power gradually declines during the long cruise.",
+    "why": "Preserve power margin for arrival.",
+    "options": [
+      {
+        "label": "Turn off nonessential payloads",
+        "pass": {
+          "effects": {
+            "charge": 14,
+            "science": -4
+          },
+          "reason": "Power reserves were preserved."
+        }
+      },
+      {
+        "label": "Keep everything active",
+        "pass": {
+          "effects": {
+            "charge": -28,
+            "science": 9
+          },
+          "reason": "You gained cruise data at the expense of power."
+        }
+      }
+    ]
+  },
+  {
+    "id": "comm_delay",
+    "trigger": {
+      "type": "lap",
+      "lap": 3
+    },
+    "room": "control",
+    "title": "Eight-hour round-trip communications",
+    "text": "Near Neptune, a signal takes about 4 hours one-way (the exact time varies with Earth\u2013Neptune distance). You cannot steer the spacecraft live.",
+    "why": "A planned command sequence with safe automatic responses handles the delay.",
+    "options": [
+      {
+        "label": "Upload an autonomous command sequence",
+        "pass": {
+          "effects": {
+            "science": 18
+          },
+          "reason": "The autonomous sequence executed successfully."
+        },
+        "needs": {
+          "stat": "hasAutonomy",
+          "min": 1
+        },
+        "fail": {
+          "effects": {
+            "health": -18,
+            "science": -5
+          },
+          "reason": "The basic computer could not execute the plan."
+        }
+      },
+      {
+        "label": "Wait for ground confirmation",
+        "pass": {
+          "effects": {
+            "science": -6
+          },
+          "reason": "The spacecraft waited safely but lost observation time."
+        }
+      }
+    ]
+  },
+  {
+    "id": "neptune_cold",
+    "trigger": {
+      "type": "lap",
+      "lap": 4
+    },
+    "room": "thermal",
+    "title": "Extreme cold at Neptune",
+    "text": "Neptune is very far from the Sun. Cold exposed equipment can fall outside its safe operating range unless heaters or insulation protect it.",
+    "why": "Heaters consume power but prevent damage.",
+    "options": [
+      {
+        "label": "Turn on thermal control",
+        "pass": {
+          "effects": {
+            "charge": -20,
+            "science": 12
+          },
+          "reason": "The instruments stayed within their operating range."
+        },
+        "needs": {
+          "stat": "thermalQuality",
+          "min": 1
+        },
+        "fail": {
+          "effects": {
+            "health": -26
+          },
+          "reason": "Your thermal system was inadequate."
+        }
+      },
+      {
+        "label": "Conserve power",
+        "pass": {
+          "effects": {
+            "charge": 8,
+            "health": -20
+          },
+          "reason": "Cold degraded the instruments."
+        }
+      }
+    ]
+  },
+  {
+    "id": "probe_window",
+    "trigger": {
+      "type": "lap",
+      "lap": 5
+    },
+    "room": "instr",
+    "title": "Atmospheric probe release window",
+    "text": "You have one safe release window for a probe to fall into Neptune\u2019s upper atmosphere. The orbiter remains in space.",
+    "why": "The probe needs a working link to the orbiter and must be released during the planned entry geometry.",
+    "options": [
+      {
+        "label": "Release the descent probe now",
+        "pass": {
+          "effects": {
+            "science": 35,
+            "probe": 1,
+            "data": 18
+          },
+          "reason": "The probe began its descent and returned a short stream of atmospheric measurements via the orbiter."
+        },
+        "needs": {
+          "stat": "hasProbe",
+          "min": 1
+        },
+        "fail": {
+          "effects": {
+            "science": -10
+          },
+          "reason": "No descent probe is installed."
+        }
+      },
+      {
+        "label": "Wait for a better window",
+        "pass": {
+          "effects": {
+            "science": 4
+          },
+          "reason": "The window was missed; the probe remains aboard."
+        }
+      }
+    ]
+  },
+  {
+    "id": "dark_storm",
+    "trigger": {
+      "type": "lap",
+      "lap": 6
+    },
+    "room": "instr",
+    "title": "Dark storm appears",
+    "text": "A dark storm-like vortex is visible in the clouds. Neptune\u2019s dark spots can change and disappear over time.",
+    "why": "Turning the camera to an unexpected storm may produce valuable observations, but costs planned coverage.",
+    "options": [
+      {
+        "label": "Retarget camera and capture storm",
+        "pass": {
+          "effects": {
+            "science": 28,
+            "data": 22,
+            "image": 1
+          },
+          "reason": "A high-value storm image was captured."
+        },
+        "needs": {
+          "stat": "hasCamera",
+          "min": 1
+        },
+        "fail": {
+          "effects": {
+            "science": -8
+          },
+          "reason": "You have no visible camera."
+        }
+      },
+      {
+        "label": "Keep the planned imaging schedule",
+        "pass": {
+          "effects": {
+            "science": 12,
+            "image": 1
+          },
+          "reason": "Routine cloud imagery was collected."
+        }
+      }
+    ]
+  }
+]

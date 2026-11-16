@@ -1,0 +1,38 @@
+[
+  {
+    "id": "launcher_small",
+    "name": "Small rideshare",
+    "cost": 15,
+    "reliability": 0.92,
+    "capacity": {
+      "leo": 300,
+      "high": 0,
+      "lunar": 0,
+      "deep": 0
+    }
+  },
+  {
+    "id": "launcher_medium",
+    "name": "Medium launcher",
+    "cost": 60,
+    "reliability": 0.95,
+    "capacity": {
+      "leo": 2000,
+      "high": 1500,
+      "lunar": 700,
+      "deep": 0
+    }
+  },
+  {
+    "id": "launcher_heavy",
+    "name": "Heavy launcher",
+    "cost": 150,
+    "reliability": 0.97,
+    "capacity": {
+      "leo": 8000,
+      "high": 6000,
+      "lunar": 3000,
+      "deep": 3500
+    }
+  }
+]

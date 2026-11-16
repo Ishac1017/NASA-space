@@ -1,0 +1,37 @@
+import {useEffect,useState} from 'react';
+import {eventInfo} from '../game/missionGuide';
+const starPoints=Array.from({length:65},(_,i)=>({x:(i*131+17)%805+8,y:(i*i*57+91)%400+12,s:i%7===0?2:1}));
+const iceCrater=[[390,173,29],[451,229,18],[365,273,20],[423,155,11],[471,189,13],[340,223,14]];
+export default function MissionScene({missionId='wildfire',eventId=null,cycle=0,paused=false,showTitle=true}){
+ const [a,setA]=useState(0),event=eventInfo[eventId],isCruise=missionId==='neptune'&&cycle<3;
+ useEffect(()=>{if(paused)return;let last=0,raf=0;const tick=t=>{if(t-last>38){setA(v=>(v+.019)%(2*Math.PI));last=t;}raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick);return ()=>cancelAnimationFrame(raf)},[paused]);
+ const px=410+253*Math.cos(a),py=220+125*Math.sin(a),angle=a*180/Math.PI+90;
+ return <div className={`mission-scene scene-${missionId} phenomenon-${event?.scene||'none'}`}><svg viewBox="0 0 820 440" role="img" aria-label={`${missionId==='wildfire'?'Earth orbit':missionId==='lunar'?'Moon orbit':isCruise?'Deep-space cruise':'Neptune orbit'} illustration with an animated spacecraft and ${eventId||'normal flight'} conditions`}><defs>
+ <radialGradient id="earthGrad" cx="26%" cy="20%"><stop offset="0%" stopColor="#6bc1f5"/><stop offset="55%" stopColor="#2278b7"/><stop offset="100%" stopColor="#062447"/></radialGradient>
+ <radialGradient id="moonGrad" cx="27%" cy="23%"><stop offset="0%" stopColor="#dde4ee"/><stop offset="62%" stopColor="#a0a8b9"/><stop offset="100%" stopColor="#34384a"/></radialGradient>
+ <radialGradient id="neptuneGrad" cx="26%" cy="25%"><stop offset="0%" stopColor="#c5dcf9"/><stop offset="45%" stopColor="#518dd8"/><stop offset="100%" stopColor="#0b2f81"/></radialGradient>
+ <clipPath id="planetClip"><circle cx="410" cy="220" r="111"/></clipPath>
+ <filter id="blurCloud"><feGaussianBlur stdDeviation="9"/></filter>
+ <radialGradient id="signalGrad"><stop stopColor="#f1bd64" stopOpacity=".7"/><stop offset="1" stopColor="#ff9d4a" stopOpacity="0"/></radialGradient>
+ </defs>
+ {starPoints.map((p,i)=><circle key={i} cx={p.x} cy={p.y} r={p.s} fill="#fff" opacity={i%5===0?.8:.3}/>) }
+ {isCruise?<><line x1="60" y1="300" x2="760" y2="146" stroke="#6273a4" strokeDasharray="4 9" opacity=".65"/><circle cx="90" cy="293" r="48" fill="#efaf6e" opacity=".15"/><circle cx="90" cy="293" r="16" fill="#ffc25c"/><circle cx="720" cy="157" r="72" fill="url(#neptuneGrad)" opacity=".65"/><g transform={`translate(${165+(Math.sin(a/2)+1)*195} ${270-(Math.sin(a/2)+1)*39}) rotate(-14)`}><ShipSymbol/></g><text x="49" y="355" fill="#e8cb92" fontSize="14">SUN</text><text x="673" y="257" fill="#d9e9ff" fontSize="14">NEPTUNE</text><text x="280" y="360" fill="#a8bbdc" fontSize="13">DEEP-SPACE CRUISE · time compressed</text></>:<>
+ <ellipse cx="410" cy="220" rx="253" ry="125" stroke="#7e9acb" opacity=".4" strokeWidth="1.5" strokeDasharray="5 8" fill="none"/>
+ <circle cx="410" cy="220" r="124" stroke={missionId==='neptune'?'#4472df':'#86c0fa'} strokeOpacity=".16" strokeWidth="19" fill="none"/>
+ <circle cx="410" cy="220" r="111" fill={missionId==='wildfire'?'url(#earthGrad)':missionId==='lunar'?'url(#moonGrad)':'url(#neptuneGrad)'}/>
+ {missionId==='wildfire'&&<g clipPath="url(#planetClip)"><path d="M349 115 Q376 135 364 156 L389 175 392 204 362 230 347 208 331 214 314 187 319 166 301 155Z M463 141 L486 156 494 190 473 205 477 238 447 250 434 218 446 195 418 173 435 148Z M369 265 Q390 253 411 260 L433 287 407 320 372 299Z" fill="#5bc3ab" opacity=".6"/><path d="M317 182 Q365 154 410 179 M396 258 Q463 227 493 249 M324 252 Q382 236 432 246" stroke="#d8efff" strokeWidth="18" opacity=".35" strokeLinecap="round" fill="none" filter="url(#blurCloud)"/></g>}
+ {missionId==='lunar'&&<g clipPath="url(#planetClip)">{iceCrater.map(([x,y,r],i)=><g key={i}><circle cx={x} cy={y} r={r} fill="#52596a" opacity=".55"/><circle cx={x-4} cy={y-4} r={r*.8} fill="#7b8290" opacity=".65"/></g>)}<path d="M310 245 Q410 170 514 250 L520 320 300 320Z" fill="#15243a" opacity=".62"/><circle cx="406" cy="284" r="14" fill="#9ad9fc" opacity=".72"/></g>}
+ {missionId==='neptune'&&<g clipPath="url(#planetClip)"><path d="M291 170 Q408 207 526 157 M302 206 Q420 244 519 205 M303 239 Q411 271 512 244 M325 296 Q412 282 491 297" stroke="#b1d2f6" strokeWidth="17" opacity=".32" fill="none"/><ellipse cx="450" cy="194" rx="28" ry="15" transform="rotate(-18 450 194)" fill="#18397a" opacity=".86"/><ellipse cx="452" cy="190" rx="35" ry="21" transform="rotate(-18 450 190)" stroke="#d2e8ff" strokeWidth="5" opacity=".28" fill="none"/></g>}
+ <g transform={`translate(${px} ${py}) rotate(${angle})`}><ShipSymbol/></g></>}
+ {(event?.scene==='asteroids')&&<g className="hazard-rocks">{Array.from({length:19},(_,i)=><polygon key={i} className="rock" style={{animationDelay:`${i*.19}s`}} points={`${(i*113)%770},${(i*173)%385} ${(i*113)%770+9},${(i*173)%385+3} ${(i*113)%770+3},${(i*173)%385+12}`} fill="#d7b9a4" opacity=".75"/>)}</g>}
+ {['radiation','storm'].includes(event?.scene)&&<g className="particle-field">{Array.from({length:17},(_,i)=><path key={i} className="radiation-particle" d={`M${i*52-100} ${i*31%430} l110 -34`} stroke={event?.scene==='storm'?'#b5deff':'#ffc86e'} strokeWidth="2" opacity=".7" style={{animationDelay:`${i*.17}s`}}/>)}</g>}
+ {event?.scene==='clouds'&&<g className="cloud-bank"><ellipse cx="400" cy="199" rx="112" ry="29" fill="#eff7ff" opacity=".55" filter="url(#blurCloud)"/><ellipse cx="490" cy="261" rx="92" ry="19" fill="#ecf6ff" opacity=".42" filter="url(#blurCloud)"/></g>}
+ {event?.scene==='wildfire'&&<g className="fire-spots">{[[384,194],[419,250],[455,220]].map(([x,y],i)=><g key={i}><circle cx={x} cy={y} r="23" fill="url(#signalGrad)"/><circle cx={x} cy={y} r="5" fill="#ff8241" className="fire-dot"/></g>)}</g>}
+ {event?.scene==='blackout'&&<g><path d="M410 220 L250 110 A196 196 0 0 0 244 334 Z" fill="#060918" opacity=".6"/><text x="33" y="75" fill="#ffcf8c" fontSize="15">RADIO LINK BLOCKED</text></g>}
+ {event?.scene==='eclipse'&&<g><path d="M410 220 L300 75 A162 162 0 0 0 303 364Z" fill="#081127" opacity=".55"/><text x="40" y="78" fill="#b9d9f4" fontSize="15">SHADOW ZONE</text></g>}
+ {event?.scene==='probe'&&<g className="falling-probe"><circle cx="570" cy="175" r="8" fill="#f6d9a0"/><path d="M555 165 Q570 142 585 165" fill="none" stroke="#f6d9a0" strokeWidth="3"/><path d="M570 186 l-8 16 m8 -16 l8 16" stroke="#f6d9a0" strokeWidth="2"/></g>}
+ {event?.scene==='signal'&&<g className="radio-waves"><circle cx="650" cy="155" r="35" stroke="#68d9ff" fill="none"/><circle cx="650" cy="155" r="60" stroke="#68d9ff" opacity=".45" fill="none"/></g>}
+ {showTitle&&<><rect x="18" y="17" width="255" height="43" rx="10" fill="#09162c" opacity=".85"/><text x="33" y="44" fill="#e2edff" fontSize="16" fontWeight="700">{isCruise?'CRUISE THROUGH SPACE':missionId==='lunar'?'MOON · POLAR ORBIT':missionId==='neptune'?'NEPTUNE · ORBIT':'EARTH · OBSERVATION ORBIT'}</text><text x="20" y="418" fill="#b0c4df" fontSize="12">Animated teaching view • position and distances not to scale</text></>}
+ </svg></div>;
+}
+function ShipSymbol(){return <g><path d="M0 -18 L10 7 0 2 -10 7Z" fill="#f1f5ff" stroke="#82b6fa" strokeWidth="1.5"/><rect x="-22" y="-4" width="12" height="12" rx="1" fill="#4383df" stroke="#85ceff"/><rect x="10" y="-4" width="12" height="12" rx="1" fill="#4383df" stroke="#85ceff"/><path d="M-8 1 L-22 1 M8 1 L22 1" stroke="#c7d8ee" strokeWidth="2"/><path d="M-4 8 l4 12 4 -12" fill="#efa66c" opacity=".75"/></g>}
